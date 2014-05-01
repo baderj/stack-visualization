@@ -1,0 +1,42 @@
+<!-- stack image -->
+    <defs>
+        <marker id="markerArrow"
+            viewBox="0 0 10 10" refX="0" refY="5" 
+            markerUnits="strokeWidth"
+            markerWidth="4" markerHeight="3"
+            orient="auto">
+        <path d="M 0 0 L 10 5 L 0 10 z" />
+        </marker>
+    </defs>
+    <!-- figure box -->
+    <g transform="translate({{data.svg.margin}}, {{data.svg.margin}})">
+        <!-- stack box -->
+        <g transform="translate({{data.stack.l_mar}}, {{data.stack.t_mar}})">
+            <!-- rectangles with labels -->
+            {% for s in data.stack.elements -%}
+            <g transform="translate(0, {{s.y}})">
+                <rect x="0" y="0" width="{{data.stack.w}}px" height="{{s.h}}px" style="fill:none;stroke:black;" />
+                {%- if s.label is string %}
+                <g transform="translate({{data.stack.lab_off_x}}, {{data.stack.lab_off_y}})">
+                    <text>{{s.label}}</text>
+                </g>
+                {%- endif -%}
+                {%- if s.ebp_offset is defined -%}
+                <g transform="translate({{data.stack.lab_off_x}}, 0)">
+                    <g transform="translate({{data.stack.w}}, {{data.stack.lab_off_y}})">
+                        <text>{{ s.ebp_offset }}</text>
+                    </g>
+                </g>
+                {%- endif %}
+            </g>
+            {% endfor %}
+            <!-- ESP pointer -->
+            {% if data.esp is defined -%}
+            <g transform="translate({{data.esp.x}}, {{data.esp.y}})">
+                <text transform="translate(0, {{data.stack.lab_off_y}})">ESP</text> 
+                <line x1="{{data.esp.arrow_x1}}" y1="{{data.esp.arrow_y}}" x2="{{data.esp.arrow_x2}}" y2="{{data.esp.arrow_y}}" 
+                style="stroke: black; stroke-width: 2px; fill: none; marker-end: url(#markerArrow);"/>
+            </g>
+            {%- endif %}
+        </g>
+    </g>
