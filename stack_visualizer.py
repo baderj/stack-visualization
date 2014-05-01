@@ -177,7 +177,7 @@ class StackVisualization:
         template = temp.read_template(filename)
         self.svg = template.render(data=self.data)
 
-if __name__=="__main__":
+if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='visualize stack')
     parser.add_argument('assembly_file')
     parser.add_argument('-o', '--output', default='out.svg')
@@ -188,5 +188,5 @@ if __name__=="__main__":
         program = r.read()
     stack = StackData()
     code = CodeVisualization()
-    code.visualize_instructions(program, stack, args.stacks_per_row, args.output)
-
+    code.visualize_instructions(program, stack, args.stacks_per_row,
+                                args.output)
